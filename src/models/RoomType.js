@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const Schema = mongoose.Schema
-const RoomCategory = mongoose.model('RoomCategory', new Schema({
-    type: { type: String, require: true, trim: true },
+const RoomType = new Schema({
+    room_type: { type: String, require: true, trim: true },
     rate: {
         type: Number,
         validate(value) {
@@ -13,19 +12,19 @@ const RoomCategory = mongoose.model('RoomCategory', new Schema({
         },
     },
     description: { type: String, trim: true },
-    quality_type: { type: String },
-    bed_description: { type: String },
-    view_type: { type: String },
+    quality_type: { type: String, trim: true },
+    bed_description: { type: String, trim: true },
+    view_type: { type: String, trim: true },
     adult_number: { type: Number },
     child_number: { type: Number },
     room_quantity: { type: Number, default: 0 },
-    status: { type: String, trim: true },
+    status: {
+        type: String,
+        trim: true,
+        enum: ['Active', 'Inactive'],
+    },
     image: [{ type: String }],
     current_promotion: { type: Schema.Types.ObjectId, ref: 'Promotion' },
-}))
-
-roomCategory.save().then(() => {
-    console.log(roomCategory)
-}).catch(error => {
-    console.log('Error: ', error)
 })
+
+mongoose.model('RoomType', RoomType)
