@@ -1,10 +1,19 @@
 const mongoose = require('mongoose');
 const router = require('express').Router()
-require('../models/RoomType')
+require('../../models/RoomType')
 
 let RoomType = mongoose.model('RoomType')
 
-router.post('/api/roomtype', async(req, res) => {
+router.get('/', async (req, res) => {
+    try {
+        const roomTypes = await RoomType.find({})
+        res.send(roomTypes)
+    } catch (error) {
+        res.status(500).send()
+    }
+})
+
+router.post('/', async(req, res) => {
     const roomType = new RoomType(req.body)
     try {
         await roomType.save()

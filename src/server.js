@@ -5,16 +5,17 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 
-const roomTypeRouter = require('./routers/roomType')
-const bookingRouter = require('./routers/booking')
-const roomRouter = require('./routers/room')
-const paypalRouter = require('./routers/paypal')
+// const roomTypeRouter = require('./routers/api/roomType')
+// const bookingRouter = require('./routers/api/booking')
+// const roomRouter = require('./routers/api/room')
+// const paypalRouter = require('./routers/api/paypal')
 
 app.use(bodyParser.json())
-app.use(roomTypeRouter)
-app.use(bookingRouter)
-app.use(roomRouter)
-app.use(paypalRouter)
+app.use(require('./routers'))
+// app.use(roomTypeRouter)
+// app.use(bookingRouter)
+// app.use(roomRouter)
+// app.use(paypalRouter)
 
 const port = process.env.PORT || 4000
 

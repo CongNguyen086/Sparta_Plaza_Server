@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const router = require('express').Router()
-require('../models/Room')
+require('../../models/Room')
 
 let Room = mongoose.model('Room')
 
-router.post('/api/room', async(req, res) => {
+router.post('/', async(req, res) => {
     const room = new Room(req.body)
     try {
         await room.save()

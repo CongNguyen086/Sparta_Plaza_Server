@@ -2,30 +2,9 @@ const mongoose = require('mongoose')
 const router = require('express').Router()
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
-require('../models/Booking')
+require('../../models/Booking')
 
 let Booking = mongoose.model('Booking')
-
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'darcyembruso@gmail.com', // TODO: your gmail account 
-        pass: 'darcy_embruso123' // TODO: your gmail password
-    },
-    tls: {
-        rejectUnauthorized: false
-    },
-})
-
-transporter.use('compile', hbs({
-    viewEngine: {
-        extName: '.handlebars',
-        partialsDir: './src/email_templates/',
-        layoutsDir: './src/email_templates/',
-        defaultLayout: '',
-    },
-    viewPath: './src/email_templates/',
-}))
 
 let mailOptions = {
     from: 'Cong Nguyen', // TODO: email sender
@@ -36,16 +15,9 @@ let mailOptions = {
     context: {
         name: 'Mr. Son'
     } // send extra values to template
-};
+}
 
-transporter.sendMail(mailOptions, (err, data) => {
-    if (err) {
-        return console.log('Error occurs', err);
-    }
-    return console.log('Email sent!!!');
-});
-
-router.post('/api/booking', async(req, res) => {
+router.post('/', async(req, res) => {
     try {
         const booking = new Booking(req.body)
         await booking.save()
@@ -55,19 +27,34 @@ router.post('/api/booking', async(req, res) => {
     }
 })
 
-router.get('/api/sendemail', (req, res) => {
-    email
-        .send({
-            template: path.join(__dirname, 'src', 'email_templates'),
-            message: {
-                to: 'bethanycurly@gmail.com'
-            },
-            locals: {
-                name: 'Bethany'
-            }
-        })
-        .then(console.log)
-        .catch(console.error);
+router.get('/sendemail', (req, res) => {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'darcyembruso@gmail.com', // TODO: your gmail account 
+            pass: 'darcy_embruso123' // TODO: your gmail password
+        },
+        tls: {
+            rejectUnauthorized: false
+        },
+    })
+    
+    transporter.use('compile', hbs({
+        viewEngine: {
+            extName: '.handlebars',
+            partialsDir: './src/email_templates/',
+            layoutsDir: './src/email_templates/',
+            defaultLayout: '',
+        },
+        viewPath: './src/email_templates/',
+    }))
+
+    transporter.sendMail(mailOptions, (err, data) => {
+        if (err) {
+            return console.log('Error occurs', err);
+        }
+        return console.log('Email sent!!!');
+    })
 })
 
 module.exports = router

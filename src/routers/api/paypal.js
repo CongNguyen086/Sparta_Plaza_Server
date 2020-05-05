@@ -33,17 +33,17 @@ var create_payment_json = {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "http://localhost:" + process.env.PORT + '/api/success',
-        "cancel_url": "http://localhost:" + process.env.PORT + '/api/cancel',
+        "return_url": "http://localhost:" + process.env.PORT + '/payment/success',
+        "cancel_url": "http://localhost:" + process.env.PORT + '/payment/cancel',
     },
     "transactions": transactions
 };
 
-router.get('/api/payment', (req, res) => {
+router.get('/', (req, res) => {
     paypal.payment.create(create_payment_json, function (error, payment) {
         if (error) {
             console.log(error)
-            res.redirect('/api/cancel')
+            res.redirect('/cancel')
         } else {
             var links = payment.links
             var counter = links.length
@@ -59,7 +59,7 @@ router.get('/api/payment', (req, res) => {
     });
 })
 
-router.get('/api/success', (req, res) => {
+router.get('/success', (req, res) => {
     var paymentId = req.query.paymentId;
     var payerId = { 'payer_id': req.query.PayerID };
     paypal.payment.execute(paymentId, payerId, function (error, payment) {
@@ -76,7 +76,7 @@ router.get('/api/success', (req, res) => {
     });
 })
 
-router.get('/api/cancel', (req, res) => {
+router.get('/cancel', (req, res) => {
     res.status(200).send({ message: 'Payment Cancelled' })
 })
 
