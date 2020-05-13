@@ -24,7 +24,7 @@ const Booking = new Schema({
         subtotal: { type: Number },
     }],
     guest: {
-        member_id: { type: Schema.Types.ObjectId },
+        member_id: { type: Schema.Types.ObjectId, ref: 'Member' },
         fullname: { type: String, trim: true },
         email: {
             type: String,

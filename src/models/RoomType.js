@@ -23,8 +23,7 @@ const RoomType = new Schema({
         trim: true,
         enum: ['Active', 'Inactive'],
     },
-    image: [{ type: String }],
-    current_promotion: { type: Schema.Types.ObjectId, ref: 'Promotion' },
+    image: [{ type: Buffer }],
 })
 
 mongoose.model('RoomType', RoomType)

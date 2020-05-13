@@ -13,7 +13,7 @@ const Promotion = new Schema({
     end_day: { type: Date },
     status: {
         type: String,
-        enum: ['Active','Overdue']
+        enum: ['Active', 'Pending', 'Overdue']
     },
     room_type: { type: Schema.Types.ObjectId, ref: 'RoomType' }
 })

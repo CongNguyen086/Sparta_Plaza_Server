@@ -4,7 +4,7 @@ const validator = require('validator')
 const Schema = mongoose.Schema
 const Review = new Schema({
     content: { type: String, required: true },
-    image: [{ type: String }],
+    star: { type: Number },
     member: { type: Schema.Types.ObjectId, ref: 'Member' }
 })
 
