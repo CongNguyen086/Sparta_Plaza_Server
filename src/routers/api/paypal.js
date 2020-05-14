@@ -12,16 +12,16 @@ var transactions = [
         "invoice_number": Math.random().toString(36).substr(2, 10),
         "item_list": {
             "items": [{
-                "name": "item",
-                "price": "1.00",
+                "name": "Superior Twin Room",
+                "price": "100.00",
                 "currency": "USD",
-                "quantity": 2,
+                "quantity": 1,
                 "description": 'Promotion',
             }]
         },
         "amount": {
             "currency": "USD",
-            "total": "2.00"
+            "total": "100.00"
         },
         "description": "This is the payment description."
     }
